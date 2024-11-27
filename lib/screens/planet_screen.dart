@@ -6,38 +6,82 @@ import '../data/planet_data.dart';
 class PlanetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('الكواكب', style: TextStyle(fontSize: 20)),
       ),
-      drawer: CustomDrawer(), // Inclure la barre de menu ici
-
-      body: ListView.builder(
-        itemCount: planets.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              planets[index].name,
-              style: TextStyle(fontSize: 18),
-            ),
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        PlanetDetailScreen(planet: planets[index]),
+      drawer: CustomDrawer(),
+      body: Center(
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 0.8,
+                    ),
+                    padding: EdgeInsets.all(10),
+                    itemCount: planets.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PlanetDetailScreen(planet: planets[index]),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.asset(
+                                    planets[index].imagePath,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                planets[index].name,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-              child: SizedBox(
-                width: 70, // Largeur de l'image
-                height: 70, // Hauteur de l'image
-                child: Image.asset(planets[index].imagePath, fit: BoxFit.cover),
-              ),
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

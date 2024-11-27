@@ -8,6 +8,4 @@ class Planet {
     required this.description,
     required this.imagePath,
   });
-
-  static fromJson(json) {}
 }
