@@ -102,32 +102,17 @@ class PlanetDetailScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              planet.name,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            SizedBox(height: 20),
+            Image.asset(
+              planet.imagePath,
+              height: 300,
+              fit: BoxFit.cover,
             ),
             SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text(planet.name),
-                    content: Text(planet.description),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text('إغلاق'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: Image.asset(
-                planet.imagePath,
-                height: 500,
-                fit: BoxFit.cover,
-              ),
+            Text(
+              planet.description,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
